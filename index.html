@@ -5,50 +5,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hanns EV Garage - Katalog</title>
     <style>
-      /* Menggunakan font modern dari Google Fonts */
       @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap");
 
       :root {
-        --bg-main: #0f172a; /* Slate 900 */
-        --bg-card: #1e293b; /* Slate 800 */
-        --text-main: #f8fafc; /* Slate 50 */
-        --text-muted: #94a3b8; /* Slate 400 */
-        --accent: #0ea5e9; /* Sky 500 */
-        --accent-hover: #0284c7; /* Sky 600 */
+        --bg-main: #0f172a;
+        --bg-card: #1e293b;
+        --text-main: #f8fafc;
+        --text-muted: #94a3b8;
+        --accent: #0ea5e9;
+        --accent-hover: #0284c7;
       }
 
+      /* Flexbox buat dorong footer ke bawah kalau konten dikit */
       body {
         font-family: "Inter", sans-serif;
         margin: 0;
         background-color: var(--bg-main);
         color: var(--text-main);
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
+      .main-content {
+        flex: 1; /* Konten utama mengambil sisa space biar footer tetap di bawah */
         padding-bottom: 50px;
       }
 
-      /* HEADER */
+      /* HEADER DENGAN LOGO */
       header {
         background: rgba(30, 41, 59, 0.8);
         backdrop-filter: blur(10px);
-        padding: 30px 20px;
-        text-align: center;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         position: sticky;
         top: 0;
         z-index: 10;
       }
-      header h1 {
+
+      .header-logo {
+        width: 60px; /* Atur ukuran logo di sini */
+        height: auto;
+        margin-bottom: 10px;
+        border-radius: 8px; /* Opsional: kalau logo mau agak membulat */
+      }
+
+      .header-text h1 {
         margin: 0;
         font-weight: 800;
-        font-size: 2em;
+        font-size: 1.8em;
         letter-spacing: -0.5px;
+        text-align: center;
       }
-      header p {
+      .header-text p {
         margin: 5px 0 0;
+        color: var(--accent);
+        font-weight: 600;
+        text-align: center;
+        font-size: 0.9em;
+      }
+
+      /* FOOTER */
+      footer {
+        background: #0b1120;
+        padding: 25px 20px;
+        text-align: center;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        margin-top: auto; /* Memastikan dia selalu di bawah */
+      }
+      footer p {
+        margin: 0;
+        color: var(--text-muted);
+        font-size: 0.85em;
+      }
+      footer .footer-brand {
         color: var(--accent);
         font-weight: 600;
       }
 
-      /* NAVIGATION TABS */
+      /* (Sisa CSS nav-tabs, grid, card, modal sama persis seperti sebelumnya) */
       .nav-tabs {
         display: flex;
         justify-content: center;
@@ -76,7 +114,6 @@
         box-shadow: 0 4px 15px rgba(14, 165, 233, 0.4);
       }
 
-      /* GRID KATALOG */
       .grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -130,7 +167,6 @@
         margin: 0;
       }
 
-      /* MODAL (POP-UP DETAIL) */
       .modal-overlay {
         display: none;
         position: fixed;
@@ -150,7 +186,6 @@
         display: flex;
         opacity: 1;
       }
-
       .modal-content {
         background: var(--bg-main);
         width: 90%;
@@ -163,8 +198,6 @@
         max-height: 90vh;
         border: 1px solid rgba(255, 255, 255, 0.1);
       }
-
-      /* Layout Modal: Kiri (Gambar), Kanan (Info) - Desktop */
       .modal-body {
         display: flex;
         flex-direction: column;
@@ -187,8 +220,6 @@
           overflow-y: auto;
         }
       }
-
-      /* Galeri Modal */
       .main-img-container {
         width: 100%;
         border-radius: 12px;
@@ -223,8 +254,6 @@
         opacity: 1;
         border-color: var(--accent);
       }
-
-      /* Info Modal */
       .close-btn {
         position: absolute;
         top: 15px;
@@ -245,7 +274,6 @@
       .close-btn:hover {
         background: rgba(255, 255, 255, 0.2);
       }
-
       .modal-info h2 {
         margin: 0 0 10px;
         font-size: 1.8em;
@@ -269,7 +297,6 @@
         margin-bottom: 20px;
         white-space: pre-wrap;
       }
-
       .btn-whatsapp {
         display: block;
         width: 100%;
@@ -289,17 +316,28 @@
     </style>
   </head>
   <body>
+    <script src="data.js"></script>
+
     <header>
-      <h1>Hanns EV Garage</h1>
-      <p>Spesialis Motor Listrik & Custom Battery</p>
+      <img src="https://via.placeholder.com/60x60/0ea5e9/fff?text=H" alt="Logo" class="header-logo" />
+      <div class="header-text">
+        <h1>Hanns EV Garage</h1>
+        <p>Spesialis Motor Listrik & Custom Battery</p>
+      </div>
     </header>
 
-    <div class="nav-tabs">
-      <button id="btn-motor" class="active" onclick="renderKatalog('motor')">Motor Listrik</button>
-      <button id="btn-sparepart" onclick="renderKatalog('sparepart')">Sparepart</button>
+    <div class="main-content">
+      <div class="nav-tabs">
+        <button id="btn-motor" class="active" onclick="renderKatalog('motor')">Motor Listrik</button>
+        <button id="btn-sparepart" onclick="renderKatalog('sparepart')">Sparepart</button>
+      </div>
+
+      <div class="grid" id="katalog-container"></div>
     </div>
 
-    <div class="grid" id="katalog-container"></div>
+    <footer>
+      <p>&copy; 2026 <span class="footer-brand">Hanns EV Garage</span>. All Rights Reserved.</p>
+    </footer>
 
     <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
       <div class="modal-content" onclick="event.stopPropagation()">
@@ -309,39 +347,6 @@
     </div>
 
     <script>
-      // DATA KATALOG BARU
-      // Perhatikan: "images" sekarang berupa array (kurung siku), dan ada "deskripsi"
-      const database = [
-        {
-          id: 1,
-          tipe: "motor",
-          nama: "Gesits G1 2022 Second",
-          harga: "Rp 15.500.000",
-          deskripsi: "Kondisi mulus 90%, pemakaian normal dalam kota. Baterai masih awet, range tembus 45-50km. Surat-surat lengkap, pajak hidup. Kelistrikan aman semua, tinggal gas.\n\nMinus: Lecet pemakaian di bodi samping kiri dikit.",
-          images: [
-            "https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&q=80&w=800", // Ganti dengan foto asli lu
-            "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1558981001-1995369a3906?auto=format&fit=crop&q=80&w=800",
-          ],
-        },
-        {
-          id: 2,
-          tipe: "motor",
-          nama: "Alva One Custom",
-          harga: "Rp 22.000.000",
-          deskripsi: "Unit siap mejeng. Udah custom ban tapak lebar dan shockbreaker YSS. Baterai sehat, tarikan responsif.",
-          images: ["https://images.unsplash.com/photo-1449426468159-d96dbf08f19f?auto=format&fit=crop&q=80&w=800", "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&fit=crop&q=80&w=800"],
-        },
-        {
-          id: 3,
-          tipe: "sparepart",
-          nama: "BMS Smart 20S 72V 100A",
-          harga: "Rp 850.000",
-          deskripsi: "BMS Smart dengan fitur Bluetooth. Bisa pantau tegangan per cell lewat HP. Cocok banget buat build baterai custom motor listrik.\n\nKelengkapan:\n- Unit BMS\n- Kabel Balance\n- Modul Bluetooth",
-          images: ["https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=800", "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800"],
-        },
-      ];
-
       function renderKatalog(filterTipe) {
         document.getElementById("btn-motor").classList.toggle("active", filterTipe === "motor");
         document.getElementById("btn-sparepart").classList.toggle("active", filterTipe === "sparepart");
@@ -349,12 +354,11 @@
         const container = document.getElementById("katalog-container");
         container.innerHTML = "";
 
+        // database sekarang diambil dari data.js
         const dataFilter = database.filter((item) => item.tipe === filterTipe);
 
         dataFilter.forEach((item) => {
-          // Ambil gambar pertama sebagai cover, kalau kosong pakai placeholder
           const coverImg = item.images && item.images.length > 0 ? item.images[0] : "https://via.placeholder.com/800x600/1e293b/fff?text=No+Image";
-
           const card = `
                 <div class="card" onclick="openModal(${item.id})">
                     <div class="card-img-wrapper">
@@ -370,7 +374,6 @@
         });
       }
 
-      // Fungsi Buka Modal Detail
       function openModal(id) {
         const item = database.find((x) => x.id === id);
         if (!item) return;
@@ -398,10 +401,8 @@
             <div class="modal-info">
                 <h2>${item.nama}</h2>
                 <div class="harga-detail">${item.harga}</div>
-                
                 <h4>Deskripsi Produk</h4>
                 <p>${item.deskripsi}</p>
-                
                 <a href="https://wa.me/6281234567890?text=Halo%20Hanns%20EV%20Garage,%20saya%20mau%20tanya%20tentang%20${encodeURIComponent(item.nama)}" target="_blank" class="btn-whatsapp">
                     Tanya via WhatsApp
                 </a>
@@ -411,37 +412,29 @@
         const modal = document.getElementById("modalOverlay");
         modal.style.display = "flex";
         setTimeout(() => modal.classList.add("active"), 10);
-        document.body.style.overflow = "hidden"; // Biar background gak bisa di-scroll
+        document.body.style.overflow = "hidden";
       }
 
-      // Fungsi Ganti Gambar di Modal
       function changeMainImage(element, src) {
         document.getElementById("mainImageDisplay").src = src;
-
-        // Hapus class active dari semua thumbnail
         const thumbs = document.querySelectorAll(".thumbnails img");
         thumbs.forEach((t) => t.classList.remove("active"));
-
-        // Tambah class active ke thumbnail yang diklik
         element.classList.add("active");
       }
 
-      // Fungsi Tutup Modal
       function closeModal(event) {
-        // Cek jika yang diklik bukan elemen di dalam modal-content
         if (event && event.target.closest(".modal-content") && !event.target.classList.contains("close-btn")) {
           return;
         }
-
         const modal = document.getElementById("modalOverlay");
         modal.classList.remove("active");
         setTimeout(() => {
           modal.style.display = "none";
         }, 300);
-        document.body.style.overflow = "auto"; // Balikin scroll
+        document.body.style.overflow = "auto";
       }
 
-      // Load pertama kali
+      // Load awal
       renderKatalog("motor");
     </script>
   </body>
