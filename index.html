@@ -10,10 +10,9 @@
     <script src="data.js"></script>
 
     <header>
-      <!-- <img src="https://via.placeholder.com/60x60/0ea5e9/fff?text=H" alt="Logo Hanns EV Garage" class="header-logo" /> -->
       <div class="header-text">
         <h1>Hanns EV Garage</h1>
-        <p>Jual Beli Sepeda & Motor Listrik</p>
+        <p>Spesialis Motor Listrik & Custom Battery</p>
       </div>
     </header>
 
@@ -50,10 +49,7 @@
     <script>
       // FUNGSI BARU: Otomatis convert angka ke Rupiah
       function formatRupiah(angka) {
-        // Hapus huruf/simbol kalau lu terlanjur ngetik 'Rp' atau titik di admin
         let bersihkanAngka = angka.toString().replace(/[^0-9]/g, "");
-
-        // Convert ke format Rupiah standar Indonesia
         return new Intl.NumberFormat("id-ID", {
           style: "currency",
           currency: "IDR",
@@ -61,7 +57,6 @@
         }).format(bersihkanAngka);
       }
 
-      // ... (kode lu yang lama ada di bawahnya)
       function renderKatalog(filterTipe) {
         document.getElementById("btn-motor").classList.toggle("active", filterTipe === "motor");
         document.getElementById("btn-sparepart").classList.toggle("active", filterTipe === "sparepart");
@@ -74,16 +69,16 @@
         dataFilter.forEach((item) => {
           const coverImg = item.images && item.images.length > 0 ? item.images[0] : "https://via.placeholder.com/800x600/1e293b/fff?text=No+Image";
           const card = `
-                  <div class="card" onclick="openModal(${item.id})">
-                      <div class="card-img-wrapper">
-                          <img src="${coverImg}" alt="${item.nama}">
-                      </div>
-                      <div class="card-content">
-                          <h3>${item.nama}</h3>
-                          <p class="harga">${item.harga}</p>
-                      </div>
-                  </div>
-              `;
+                <div class="card" onclick="openModal(${item.id})">
+                    <div class="card-img-wrapper">
+                        <img src="${coverImg}" alt="${item.nama}">
+                    </div>
+                    <div class="card-content">
+                        <h3>${item.nama}</h3>
+                        <p class="harga">${formatRupiah(item.harga)}</p>
+                    </div>
+                </div>
+            `;
           container.innerHTML += card;
         });
       }
@@ -104,24 +99,24 @@
 
         const modalBody = document.getElementById("modalBody");
         modalBody.innerHTML = `
-              <div class="modal-gallery">
-                  <div class="main-img-container">
-                      <img id="mainImageDisplay" src="${mainImg}" alt="${item.nama}">
-                  </div>
-                  <div class="thumbnails">
-                      ${thumbnailsHtml}
-                  </div>
-              </div>
-              <div class="modal-info">
-                  <h2>${item.nama}</h2>
-                  <div class="harga-detail">${item.harga}</div>
-                  <h4>Deskripsi Produk</h4>
-                  <p>${item.deskripsi}</p>
-                  <a href="https://wa.me/6281234567890?text=Halo%20Hanns%20EV%20Garage,%20saya%20mau%20tanya%20tentang%20${encodeURIComponent(item.nama)}" target="_blank" class="btn-whatsapp">
-                      Tanya via WhatsApp
-                  </a>
-              </div>
-          `;
+            <div class="modal-gallery">
+                <div class="main-img-container">
+                    <img id="mainImageDisplay" src="${mainImg}" alt="${item.nama}">
+                </div>
+                <div class="thumbnails">
+                    ${thumbnailsHtml}
+                </div>
+            </div>
+            <div class="modal-info">
+                <h2>${item.nama}</h2>
+                <div class="harga-detail">${formatRupiah(item.harga)}</div>
+                <h4>Deskripsi Produk</h4>
+                <p>${item.deskripsi}</p>
+                <a href="https://wa.me/6281234567890?text=Halo%20Hanns%20EV%20Garage,%20saya%20mau%20tanya%20tentang%20${encodeURIComponent(item.nama)}" target="_blank" class="btn-whatsapp">
+                    Tanya via WhatsApp
+                </a>
+            </div>
+        `;
 
         const modal = document.getElementById("modalOverlay");
         modal.style.display = "flex";
