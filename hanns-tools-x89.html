@@ -2,7 +2,7 @@
 <html lang="id">
   <head>
     <meta charset="UTF-8" />
-    <title>Admin - Hanns EV Garage</title>
+    <title>Admin V2 - Hanns EV Garage</title>
     <style>
       body {
         font-family: sans-serif;
@@ -15,90 +15,186 @@
         padding: 20px;
         border-radius: 8px;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        margin: auto;
       }
       input,
       select,
+      textarea,
       button {
         width: 100%;
         padding: 10px;
         margin: 10px 0;
         box-sizing: border-box;
-      }
-      canvas {
-        max-width: 100%;
-        margin-top: 10px;
         border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      textarea {
+        resize: vertical;
+      }
+      button {
+        background: #0ea5e9;
+        color: white;
+        border: none;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #0284c7;
       }
       #outputData {
         background: #eee;
-        padding: 10px;
+        padding: 15px;
         display: none;
+        margin-top: 20px;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+      }
+      .download-list {
+        margin-bottom: 15px;
+      }
+      .download-list a {
+        display: block;
+        margin: 5px 0;
+        color: #0ea5e9;
+        text-decoration: none;
+        font-weight: bold;
+      }
+      .download-list a:hover {
+        text-decoration: underline;
       }
     </style>
   </head>
   <body>
     <div class="container">
-      <h2>Input Item & Watermark</h2>
+      <h2>Input Item & Watermark (Multi-Foto)</h2>
+
+      <label>Kategori:</label>
       <select id="tipe">
         <option value="motor">Motor Listrik</option>
         <option value="sparepart">Sparepart / Baterai</option>
       </select>
-      <input type="text" id="nama" placeholder="Nama Item (ex: BMS 20S 72V)" />
-      <input type="text" id="harga" placeholder="Harga (ex: Rp 850.000)" />
-      <input type="file" id="upload" accept="image/*" />
 
-      <button onclick="generateItem()">Generate Watermark & Data</button>
+      <label>Nama Barang:</label>
+      <input type="text" id="nama" placeholder="Contoh: Gesits G1 2022 Second" />
 
-      <canvas id="canvas"></canvas>
+      <label>Harga:</label>
+      <input type="text" id="harga" placeholder="Contoh: Rp 15.500.000" />
+
+      <label>Deskripsi:</label>
+      <textarea id="deskripsi" rows="5" placeholder="Tulis deskripsi detail, minus, kondisi, dll..."></textarea>
+
+      <label>Upload Foto (Bisa pilih lebih dari 1):</label>
+      <input type="file" id="upload" accept="image/*" multiple />
+
+      <button onclick="generateItem()">Generate Data & Watermark</button>
 
       <div id="outputData">
-        <p>1. <a id="downloadLink" href="#" download="item.jpg">Download Foto Watermark</a> (Simpan di folder 'images')</p>
-        <p>2. Copy kode ini ke data.js website lu:</p>
-        <textarea id="jsonOutput" rows="4" style="width: 100%" readonly></textarea>
+        <h3>1. Download Foto (Sudah di-Watermark)</h3>
+        <p style="font-size: 0.9em; color: #666">Klik satu per satu link di bawah untuk download, simpan di folder <b>images</b>.</p>
+        <div id="downloadLinks" class="download-list"></div>
+
+        <h3>2. Copy Kode Ini</h3>
+        <p style="font-size: 0.9em; color: #666">Paste ke dalam array <code>database</code> di file index.html / data.js lu:</p>
+        <textarea id="jsonOutput" rows="12" style="width: 100%; font-family: monospace" readonly></textarea>
       </div>
     </div>
 
     <script>
-      const canvas = document.getElementById("canvas");
-      const ctx = canvas.getContext("2d");
-      let imgFile = new Image();
-
-      document.getElementById("upload").addEventListener("change", function (e) {
-        const reader = new FileReader();
-        reader.onload = function (event) {
-          imgFile.onload = function () {
-            canvas.width = imgFile.width;
-            canvas.height = imgFile.height;
-            ctx.drawImage(imgFile, 0, 0);
-          };
-          imgFile.src = event.target.result;
-        };
-        reader.readAsDataURL(e.target.files[0]);
-      });
-
-      function generateItem() {
+      async function generateItem() {
         const tipe = document.getElementById("tipe").value;
         const nama = document.getElementById("nama").value;
         const harga = document.getElementById("harga").value;
+        const deskripsi = document.getElementById("deskripsi").value;
+        const files = document.getElementById("upload").files;
 
-        // Tambah Watermark
-        ctx.drawImage(imgFile, 0, 0); // Redraw
-        ctx.font = "bold " + canvas.width / 15 + "px Arial";
-        ctx.fillStyle = "rgba(255, 255, 255, 0.7)";
-        ctx.textAlign = "right";
-        ctx.fillText("HANNS EV GARAGE", canvas.width - 20, canvas.height - 30);
+        if (files.length === 0 || !nama || !harga) {
+          alert("Isi nama, harga, dan upload minimal 1 foto!");
+          return;
+        }
 
-        // Update Download Link
-        const dataUrl = canvas.toDataURL("image/jpeg", 0.8);
-        document.getElementById("downloadLink").href = dataUrl;
+        document.getElementById("generateBtn").innerText = "Memproses...";
 
-        // Generate JSON Snippet
-        const fileName = nama.replace(/\s+/g, "-").toLowerCase() + ".jpg";
-        document.getElementById("downloadLink").download = fileName;
+        // Bikin base nama file biar rapi (contoh: gesits-g1-2022-second)
+        const baseFileName = nama
+          .replace(/\s+/g, "-")
+          .toLowerCase()
+          .replace(/[^a-z0-9-]/g, "");
 
-        const jsonData = `{ tipe: "${tipe}", nama: "${nama}", harga: "${harga}", img: "images/${fileName}" },`;
+        let imagesArrayJS = [];
+        let downloadLinksHTML = "";
+
+        // Proses setiap foto
+        for (let i = 0; i < files.length; i++) {
+          const file = files[i];
+          const result = await processImage(file);
+
+          const fileName = `${baseFileName}-${i + 1}.jpg`;
+          imagesArrayJS.push(`"images/${fileName}"`);
+
+          downloadLinksHTML += `<a href="${result}" download="${fileName}">📥 Download ${fileName}</a>`;
+        }
+
+        // Generate ID unik pakai timestamp
+        const uniqueId = Date.now();
+
+        // Format teks deskripsi biar aman di JSON (escape enter jadi \n)
+        const safeDeskripsi = deskripsi.replace(/\n/g, "\\n").replace(/"/g, '\\"');
+
+        // Susun JSON string
+        const jsonData = `{
+    id: ${uniqueId},
+    tipe: "${tipe}",
+    nama: "${nama}",
+    harga: "${harga}",
+    deskripsi: "${safeDeskripsi}",
+    images: [
+        ${imagesArrayJS.join(",\n        ")}
+    ]
+},`;
+
+        // Tampilkan hasil
+        document.getElementById("downloadLinks").innerHTML = downloadLinksHTML;
         document.getElementById("jsonOutput").value = jsonData;
         document.getElementById("outputData").style.display = "block";
+        document.getElementById("generateBtn").innerText = "Generate Data & Watermark";
+      }
+
+      // Fungsi untuk baca gambar, taruh di canvas, dan kasih watermark
+      function processImage(file) {
+        return new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            const img = new Image();
+            img.onload = () => {
+              const canvas = document.createElement("canvas");
+              canvas.width = img.width;
+              canvas.height = img.height;
+              const ctx = canvas.getContext("2d");
+
+              // Gambar foto asli
+              ctx.drawImage(img, 0, 0);
+
+              // Setup tulisan watermark
+              const fontSize = Math.max(canvas.width / 25, 20); // Skala font otomatis
+              ctx.font = "bold " + fontSize + "px Arial";
+              ctx.fillStyle = "rgba(255, 255, 255, 0.6)"; // Putih transparan
+              ctx.textAlign = "right";
+
+              // Kasih shadow biar kebaca di foto terang
+              ctx.shadowColor = "rgba(0,0,0,0.8)";
+              ctx.shadowBlur = 5;
+              ctx.shadowOffsetX = 2;
+              ctx.shadowOffsetY = 2;
+
+              ctx.fillText("HANNS EV GARAGE", canvas.width - 30, canvas.height - 40);
+
+              // Convert canvas ke Data URL (kualitas JPEG 80%)
+              resolve(canvas.toDataURL("image/jpeg", 0.8));
+            };
+            img.src = e.target.result;
+          };
+          reader.readAsDataURL(file);
+        });
       }
     </script>
   </body>
