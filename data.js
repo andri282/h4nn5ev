@@ -2,20 +2,20 @@
 
 const database = [
   {
-    id: 1,
+    id: 1776151587897,
     tipe: "motor",
-    nama: "Uwinfly T3S Pro",
-    harga: "Rp 6.000.000",
-    deskripsi: "Kondisi mulus 90%, pemakaian normal dalam kota. Baterai masih awet, range tembus 45-50km. Surat-surat lengkap, pajak hidup. Kelistrikan aman semua, tinggal gas.\n\nMinus: Lecet pemakaian di bodi samping kiri dikit.",
-    images: ["https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&q=80&w=800", "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&q=80&w=800"],
+    nama: "Alessa Ex 3000 Second",
+    harga: "8500000",
+    deskripsi: "Alessa EX3000\nSurat lengkap\nPajak ON\nBatre bawaan upgrade BMS JIKONG\nAtas Nama PT surat pelepasan ada\nharga 8.5jt",
+    images: ["images/alessa-ex-3000-second-1.jpg"],
   },
   {
-    id: 2,
+    id: 1776151505410,
     tipe: "motor",
-    nama: "Alva One Custom",
-    harga: "Rp 22.000.000",
-    deskripsi: "Unit siap mejeng. Udah custom ban tapak lebar dan shockbreaker YSS. Baterai sehat, tarikan responsif.",
-    images: ["https://images.unsplash.com/photo-1449426468159-d96dbf08f19f?auto=format&fit=crop&q=80&w=800"],
+    nama: "Uwinfly T3S PRO Second",
+    harga: "6000000",
+    deskripsi: "Uwinfly T3S Pro\nOff the road / belum bersurat\nKelengkapan bisa dengan batre 72v 20ah atau tanpa batre\nbisa dengan charger atau tanpa charger\nHarga 6jt termasuk batre dan charger",
+    images: ["images/t3pro.jpg"],
   },
   {
     id: 1776150694252,
