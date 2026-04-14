@@ -31,16 +31,31 @@
       textarea {
         resize: vertical;
       }
-      button {
+      .btn-primary {
         background: #0ea5e9;
         color: white;
         border: none;
         font-weight: bold;
         cursor: pointer;
       }
-      button:hover {
+      .btn-primary:hover {
         background: #0284c7;
       }
+
+      /* Style buat tombol copy */
+      .btn-copy {
+        background: #10b981;
+        color: white;
+        border: none;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 5px;
+        transition: 0.3s;
+      }
+      .btn-copy:hover {
+        background: #059669;
+      }
+
       #outputData {
         background: #eee;
         padding: 15px;
@@ -86,7 +101,7 @@
       <label>Upload Foto (Bisa pilih lebih dari 1):</label>
       <input type="file" id="upload" accept="image/*" multiple />
 
-      <button id="generateBtn" onclick="generateItem()">Generate Data & Watermark</button>
+      <button id="generateBtn" class="btn-primary" onclick="generateItem()">Generate Data & Watermark</button>
 
       <div id="outputData">
         <h3>1. Download Foto (Sudah di-Watermark)</h3>
@@ -95,7 +110,9 @@
 
         <h3>2. Copy Kode Ini</h3>
         <p style="font-size: 0.9em; color: #666">Paste ke dalam array <code>database</code> di file data.js lu:</p>
-        <textarea id="jsonOutput" rows="12" style="width: 100%; font-family: monospace" readonly></textarea>
+        <textarea id="jsonOutput" rows="12" style="font-family: monospace" readonly></textarea>
+
+        <button id="copyBtn" class="btn-copy" onclick="copyJSON()">📋 Copy Kode</button>
       </div>
     </div>
 
@@ -112,7 +129,6 @@
           return;
         }
 
-        // Sekarang nggak error lagi karena tombolnya udah ada ID-nya
         document.getElementById("generateBtn").innerText = "Memproses...";
 
         const baseFileName = nama
@@ -151,6 +167,32 @@
         document.getElementById("jsonOutput").value = jsonData;
         document.getElementById("outputData").style.display = "block";
         document.getElementById("generateBtn").innerText = "Generate Data & Watermark";
+
+        // Reset teks tombol copy tiap kali generate ulang
+        document.getElementById("copyBtn").innerText = "📋 Copy Kode";
+      }
+
+      // FUNGSI BUAT COPY TEKS
+      function copyJSON() {
+        const copyText = document.getElementById("jsonOutput");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); // Untuk support HP/Mobile
+
+        // Copy ke clipboard
+        navigator.clipboard
+          .writeText(copyText.value)
+          .then(() => {
+            const btn = document.getElementById("copyBtn");
+            btn.innerText = "✅ Berhasil di-copy!";
+
+            // Balikin teks tombol ke semula setelah 2 detik
+            setTimeout(() => {
+              btn.innerText = "📋 Copy Kode";
+            }, 2000);
+          })
+          .catch((err) => {
+            alert("Gagal copy teks otomatis, silakan copy manual.");
+          });
       }
 
       function processImage(file) {
