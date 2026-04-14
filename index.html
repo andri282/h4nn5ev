@@ -1,74 +1,181 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hanns EV Garage - Katalog</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <script src="data.js"></script>
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        .form-container {
+            display: none; /* Disembunyikan pas awal load */
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .form-card {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            background: #0f172a;
+            color: white;
+            font-family: inherit;
+            box-sizing: border-box;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+    </style>
+</head>
+<body>
 
-    <header>
-      <div class="header-text">
+<script src="data.js"></script>
+
+<header>
+    <div class="header-text">
         <h1>Hanns EV Garage</h1>
         <p>Jual Beli Sepeda & Motor Listrik</p>
-      </div>
-    </header>
+    </div>
+</header>
 
-    <div class="main-content">
-      <div class="nav-tabs">
-        <button id="btn-motor" class="active" onclick="renderKatalog('motor')">Motor Listrik</button>
-        <button id="btn-sparepart" onclick="renderKatalog('sparepart')">Sparepart</button>
-      </div>
-
-      <div class="grid" id="katalog-container"></div>
+<div class="main-content">
+    <div class="nav-tabs">
+        <button id="btn-motor" class="active" onclick="switchTab('motor')">Motor Listrik</button>
+        <button id="btn-sparepart" onclick="switchTab('sparepart')">Sparepart</button>
+        <button id="btn-konsultasi" onclick="switchTab('konsultasi')">Konsultasi / Jasa</button>
     </div>
 
-    <footer>
-      <div class="social-links">
+    <div class="grid" id="katalog-container">
+        </div>
+
+    <div class="form-container" id="konsultasi-container">
+        <div class="form-card">
+            <h2 style="margin-top: 0; color: var(--accent); font-size: 1.5em;">Ada yang bisa dibantu?</h2>
+            <p style="color: var(--text-muted); margin-bottom: 25px; line-height: 1.6;">
+                Butuh jasa pengiriman motor listrik (misal: Jakarta - Solo), cari rekomendasi unit, atau request carikan tipe tertentu? Tulis keperluan lu di bawah, kita diskusikan via WhatsApp.
+            </p>
+            
+            <div class="form-group">
+                <label for="wa-nama">Nama Anda</label>
+                <input type="text" id="wa-nama" placeholder="Contoh: Budi">
+            </div>
+            
+            <div class="form-group">
+                <label for="wa-pesan">Keperluan / Pertanyaan</label>
+                <textarea id="wa-pesan" rows="5" placeholder="Contoh: Mas, saya lagi cari motor yang cocok buat harian jarak 40km, budget 10 jutaan. Ada rekomendasi?"></textarea>
+            </div>
+            
+            <button onclick="kirimWhatsApp()" class="btn-whatsapp" style="border: none; cursor: pointer;">Kirim Pesan via WhatsApp</button>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="social-links">
         <a href="https://www.tiktok.com/@hannsgarage" target="_blank" class="social-icon">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"
-            />
-          </svg>
-          @hannsgarage
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+            </svg>
+            @hannsgarage
         </a>
-      </div>
-      <p>&copy; 2026 <span class="footer-brand">Hanns EV Garage</span>. All Rights Reserved.</p>
-    </footer>
-
-    <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
-      <div class="modal-content" onclick="event.stopPropagation()">
-        <button class="close-btn" onclick="closeModal(event)">✕</button>
-        <div class="modal-body" id="modalBody"></div>
-      </div>
     </div>
+    <p>&copy; 2026 <span class="footer-brand">Hanns EV Garage</span>. All Rights Reserved.</p>
+</footer>
 
-    <script>
-      // FUNGSI BARU: Otomatis convert angka ke Rupiah
-      function formatRupiah(angka) {
-        let bersihkanAngka = angka.toString().replace(/[^0-9]/g, "");
-        return new Intl.NumberFormat("id-ID", {
-          style: "currency",
-          currency: "IDR",
-          minimumFractionDigits: 0,
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <button class="close-btn" onclick="closeModal(event)">✕</button>
+        <div class="modal-body" id="modalBody">
+            </div>
+    </div>
+</div>
+
+<script>
+    // Fungsi format rupiah
+    function formatRupiah(angka) {
+        let bersihkanAngka = angka.toString().replace(/[^0-9]/g, '');
+        return new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0
         }).format(bersihkanAngka);
-      }
+    }
 
-      function renderKatalog(filterTipe) {
-        document.getElementById("btn-motor").classList.toggle("active", filterTipe === "motor");
-        document.getElementById("btn-sparepart").classList.toggle("active", filterTipe === "sparepart");
+    // FUNGSI BARU: Buat ganti-ganti tampilan antar tab
+    function switchTab(tab) {
+        // Atur warna tombol yang lagi aktif
+        document.getElementById('btn-motor').classList.toggle('active', tab === 'motor');
+        document.getElementById('btn-sparepart').classList.toggle('active', tab === 'sparepart');
+        document.getElementById('btn-konsultasi').classList.toggle('active', tab === 'konsultasi');
 
-        const container = document.getElementById("katalog-container");
-        container.innerHTML = "";
+        const katalogContainer = document.getElementById('katalog-container');
+        const formContainer = document.getElementById('konsultasi-container');
 
-        const dataFilter = database.filter((item) => item.tipe === filterTipe);
+        if (tab === 'konsultasi') {
+            // Sembunyiin grid motor, tampilin form konsultasi
+            katalogContainer.style.display = 'none';
+            formContainer.style.display = 'block';
+        } else {
+            // Tampilin grid motor (pakai display: grid dari CSS), sembunyiin form
+            katalogContainer.style.display = 'grid';
+            formContainer.style.display = 'none';
+            renderKatalog(tab); // Render ulang data motor/sparepart
+        }
+    }
 
-        dataFilter.forEach((item) => {
-          const coverImg = item.images && item.images.length > 0 ? item.images[0] : "https://via.placeholder.com/800x600/1e293b/fff?text=No+Image";
-          const card = `
+    // FUNGSI BARU: Ngerakit pesan dari form dan lempar ke WA
+    function kirimWhatsApp() {
+        const nama = document.getElementById('wa-nama').value;
+        const pesan = document.getElementById('wa-pesan').value;
+        
+        if (!nama || !pesan) {
+            alert("Harap isi nama dan keperluan dulu ya!");
+            return;
+        }
+
+        // Format teks yang bakal masuk ke chat WA lu
+        const teksWA = `Halo Hanns EV Garage,\n\nNama saya *${nama}*.\nSaya butuh konsultasi / jasa:\n"${pesan}"\n\nMohon infonya mas. Terima kasih!`;
+        
+        // Encode biar spasi dan enter kebaca sama URL WA
+        const encodedTeks = encodeURIComponent(teksWA);
+        
+        // PASTIKAN GANTI DENGAN NOMOR WA HANNS EV GARAGE LU
+        const nomorWA = "6281234567890"; 
+        
+        window.open(`https://wa.me/${nomorWA}?text=${encodedTeks}`, '_blank');
+    }
+
+    // Fungsi Render Katalog (Yang lama)
+    function renderKatalog(filterTipe) {
+        const container = document.getElementById('katalog-container');
+        container.innerHTML = ''; 
+
+        const dataFilter = database.filter(item => item.tipe === filterTipe);
+        
+        dataFilter.forEach(item => {
+            const coverImg = (item.images && item.images.length > 0) ? item.images[0] : 'https://via.placeholder.com/800x600/1e293b/fff?text=No+Image';
+            const card = `
                 <div class="card" onclick="openModal(${item.id})">
                     <div class="card-img-wrapper">
                         <img src="${coverImg}" alt="${item.nama}">
@@ -79,25 +186,25 @@
                     </div>
                 </div>
             `;
-          container.innerHTML += card;
+            container.innerHTML += card;
         });
-      }
+    }
 
-      function openModal(id) {
-        const item = database.find((x) => x.id === id);
+    function openModal(id) {
+        const item = database.find(x => x.id === id);
         if (!item) return;
 
-        let thumbnailsHtml = "";
-        const mainImg = item.images && item.images.length > 0 ? item.images[0] : "https://via.placeholder.com/800x600/1e293b/fff?text=No+Image";
+        let thumbnailsHtml = '';
+        const mainImg = (item.images && item.images.length > 0) ? item.images[0] : 'https://via.placeholder.com/800x600/1e293b/fff?text=No+Image';
 
         if (item.images && item.images.length > 0) {
-          item.images.forEach((img, index) => {
-            const activeClass = index === 0 ? "active" : "";
-            thumbnailsHtml += `<img src="${img}" class="${activeClass}" onclick="changeMainImage(this, '${img}')" alt="thumb">`;
-          });
+            item.images.forEach((img, index) => {
+                const activeClass = index === 0 ? 'active' : '';
+                thumbnailsHtml += `<img src="${img}" class="${activeClass}" onclick="changeMainImage(this, '${img}')" alt="thumb">`;
+            });
         }
 
-        const modalBody = document.getElementById("modalBody");
+        const modalBody = document.getElementById('modalBody');
         modalBody.innerHTML = `
             <div class="modal-gallery">
                 <div class="main-img-container">
@@ -118,33 +225,30 @@
             </div>
         `;
 
-        const modal = document.getElementById("modalOverlay");
-        modal.style.display = "flex";
-        setTimeout(() => modal.classList.add("active"), 10);
-        document.body.style.overflow = "hidden";
-      }
+        const modal = document.getElementById('modalOverlay');
+        modal.style.display = 'flex';
+        setTimeout(() => modal.classList.add('active'), 10);
+        document.body.style.overflow = 'hidden'; 
+    }
 
-      function changeMainImage(element, src) {
-        document.getElementById("mainImageDisplay").src = src;
-        const thumbs = document.querySelectorAll(".thumbnails img");
-        thumbs.forEach((t) => t.classList.remove("active"));
-        element.classList.add("active");
-      }
+    function changeMainImage(element, src) {
+        document.getElementById('mainImageDisplay').src = src;
+        const thumbs = document.querySelectorAll('.thumbnails img');
+        thumbs.forEach(t => t.classList.remove('active'));
+        element.classList.add('active');
+    }
 
-      function closeModal(event) {
-        if (event && event.target.closest(".modal-content") && !event.target.classList.contains("close-btn")) {
-          return;
-        }
-        const modal = document.getElementById("modalOverlay");
-        modal.classList.remove("active");
-        setTimeout(() => {
-          modal.style.display = "none";
-        }, 300);
-        document.body.style.overflow = "auto";
-      }
+    function closeModal(event) {
+        if (event && event.target.closest('.modal-content') && !event.target.classList.contains('close-btn')) { return; }
+        const modal = document.getElementById('modalOverlay');
+        modal.classList.remove('active');
+        setTimeout(() => { modal.style.display = 'none'; }, 300);
+        document.body.style.overflow = 'auto'; 
+    }
 
-      // Load awal
-      renderKatalog("motor");
-    </script>
-  </body>
+    // Load awal sekarang jalankan switchTab
+    switchTab('motor');
+</script>
+
+</body>
 </html>
