@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Katalog - Hanns EV Garage</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        background-color: #121212;
+        color: #fff;
+      }
+      header {
+        background: #222;
+        padding: 20px;
+        text-align: center;
+        border-bottom: 3px solid #00ffcc;
+      }
+      .nav-tabs {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        padding: 20px;
+      }
+      .nav-tabs button {
+        background: #333;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px;
+        font-weight: bold;
+      }
+      .nav-tabs button.active {
+        background: #00ffcc;
+        color: #121212;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+        padding: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .card {
+        background: #1e1e1e;
+        border-radius: 8px;
+        overflow: hidden;
+        text-align: center;
+        border: 1px solid #333;
+      }
+      .card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+      }
+      .card h3 {
+        margin: 10px 0 5px;
+        font-size: 1.1em;
+        padding: 0 10px;
+      }
+      .card p {
+        color: #00ffcc;
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Hanns EV Garage</h1>
+      <p>Spesialis Motor Listrik & Custom Battery</p>
+    </header>
+
+    <div class="nav-tabs">
+      <button id="btn-motor" class="active" onclick="renderKatalog('motor')">Motor Listrik</button>
+      <button id="btn-sparepart" onclick="renderKatalog('sparepart')">Sparepart</button>
+    </div>
+
+    <div class="grid" id="katalog-container"></div>
+
+    <script>
+      // DATA KATALOG (Lu tinggal paste hasil dari admin.html ke dalam array ini)
+      const database = [
+        { tipe: "motor", nama: "Gesits G1 2022 Second", harga: "Rp 15.500.000", img: "images/gesits-g1.jpg" },
+        { tipe: "motor", nama: "Alva One Custom", harga: "Rp 22.000.000", img: "images/alva-one.jpg" },
+        { tipe: "sparepart", nama: "BMS Smart 20S 72V 100A", harga: "Rp 850.000", img: "images/bms-20s.jpg" },
+        { tipe: "sparepart", nama: "Cell LiFePO4 32650", harga: "Rp 35.000 / pcs", img: "images/lifepo4.jpg" },
+      ];
+
+      function renderKatalog(filterTipe) {
+        // Atur warna tombol
+        document.getElementById("btn-motor").classList.toggle("active", filterTipe === "motor");
+        document.getElementById("btn-sparepart").classList.toggle("active", filterTipe === "sparepart");
+
+        const container = document.getElementById("katalog-container");
+        container.innerHTML = ""; // Bersihkan container
+
+        // Filter dan Tampilkan data
+        const dataFilter = database.filter((item) => item.tipe === filterTipe);
+
+        dataFilter.forEach((item) => {
+          const card = `
+                <div class="card">
+                    <img src="${item.img}" onerror="this.src='https://via.placeholder.com/300x200/333/fff?text=No+Image'" alt="${item.nama}">
+                    <h3>${item.nama}</h3>
+                    <p>${item.harga}</p>
+                </div>
+            `;
+          container.innerHTML += card;
+        });
+      }
+
+      // Load pertama kali
+      renderKatalog("motor");
+    </script>
+  </body>
+</html>

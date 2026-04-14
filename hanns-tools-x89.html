@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Admin - Hanns EV Garage</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 20px;
+        background: #f4f4f4;
+      }
+      .container {
+        max-width: 600px;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+      input,
+      select,
+      button {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        box-sizing: border-box;
+      }
+      canvas {
+        max-width: 100%;
+        margin-top: 10px;
+        border: 1px solid #ccc;
+      }
+      #outputData {
+        background: #eee;
+        padding: 10px;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Input Item & Watermark</h2>
+      <select id="tipe">
+        <option value="motor">Motor Listrik</option>
+        <option value="sparepart">Sparepart / Baterai</option>
+      </select>
+      <input type="text" id="nama" placeholder="Nama Item (ex: BMS 20S 72V)" />
+      <input type="text" id="harga" placeholder="Harga (ex: Rp 850.000)" />
+      <input type="file" id="upload" accept="image/*" />
+
+      <button onclick="generateItem()">Generate Watermark & Data</button>
+
+      <canvas id="canvas"></canvas>
+
+      <div id="outputData">
+        <p>1. <a id="downloadLink" href="#" download="item.jpg">Download Foto Watermark</a> (Simpan di folder 'images')</p>
+        <p>2. Copy kode ini ke data.js website lu:</p>
+        <textarea id="jsonOutput" rows="4" style="width: 100%" readonly></textarea>
+      </div>
+    </div>
+
+    <script>
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+      let imgFile = new Image();
+
+      document.getElementById("upload").addEventListener("change", function (e) {
+        const reader = new FileReader();
+        reader.onload = function (event) {
+          imgFile.onload = function () {
+            canvas.width = imgFile.width;
+            canvas.height = imgFile.height;
+            ctx.drawImage(imgFile, 0, 0);
+          };
+          imgFile.src = event.target.result;
+        };
+        reader.readAsDataURL(e.target.files[0]);
+      });
+
+      function generateItem() {
+        const tipe = document.getElementById("tipe").value;
+        const nama = document.getElementById("nama").value;
+        const harga = document.getElementById("harga").value;
+
+        // Tambah Watermark
+        ctx.drawImage(imgFile, 0, 0); // Redraw
+        ctx.font = "bold " + canvas.width / 15 + "px Arial";
+        ctx.fillStyle = "rgba(255, 255, 255, 0.7)";
+        ctx.textAlign = "right";
+        ctx.fillText("HANNS EV GARAGE", canvas.width - 20, canvas.height - 30);
+
+        // Update Download Link
+        const dataUrl = canvas.toDataURL("image/jpeg", 0.8);
+        document.getElementById("downloadLink").href = dataUrl;
+
+        // Generate JSON Snippet
+        const fileName = nama.replace(/\s+/g, "-").toLowerCase() + ".jpg";
+        document.getElementById("downloadLink").download = fileName;
+
+        const jsonData = `{ tipe: "${tipe}", nama: "${nama}", harga: "${harga}", img: "images/${fileName}" },`;
+        document.getElementById("jsonOutput").value = jsonData;
+        document.getElementById("outputData").style.display = "block";
+      }
+    </script>
+  </body>
+</html>
