@@ -86,7 +86,7 @@
       <label>Upload Foto (Bisa pilih lebih dari 1):</label>
       <input type="file" id="upload" accept="image/*" multiple />
 
-      <button onclick="generateItem()">Generate Data & Watermark</button>
+      <button id="generateBtn" onclick="generateItem()">Generate Data & Watermark</button>
 
       <div id="outputData">
         <h3>1. Download Foto (Sudah di-Watermark)</h3>
@@ -94,7 +94,7 @@
         <div id="downloadLinks" class="download-list"></div>
 
         <h3>2. Copy Kode Ini</h3>
-        <p style="font-size: 0.9em; color: #666">Paste ke dalam array <code>database</code> di file index.html / data.js lu:</p>
+        <p style="font-size: 0.9em; color: #666">Paste ke dalam array <code>database</code> di file data.js lu:</p>
         <textarea id="jsonOutput" rows="12" style="width: 100%; font-family: monospace" readonly></textarea>
       </div>
     </div>
@@ -112,9 +112,9 @@
           return;
         }
 
+        // Sekarang nggak error lagi karena tombolnya udah ada ID-nya
         document.getElementById("generateBtn").innerText = "Memproses...";
 
-        // Bikin base nama file biar rapi (contoh: gesits-g1-2022-second)
         const baseFileName = nama
           .replace(/\s+/g, "-")
           .toLowerCase()
@@ -123,7 +123,6 @@
         let imagesArrayJS = [];
         let downloadLinksHTML = "";
 
-        // Proses setiap foto
         for (let i = 0; i < files.length; i++) {
           const file = files[i];
           const result = await processImage(file);
@@ -134,13 +133,9 @@
           downloadLinksHTML += `<a href="${result}" download="${fileName}">📥 Download ${fileName}</a>`;
         }
 
-        // Generate ID unik pakai timestamp
         const uniqueId = Date.now();
-
-        // Format teks deskripsi biar aman di JSON (escape enter jadi \n)
         const safeDeskripsi = deskripsi.replace(/\n/g, "\\n").replace(/"/g, '\\"');
 
-        // Susun JSON string
         const jsonData = `{
     id: ${uniqueId},
     tipe: "${tipe}",
@@ -152,14 +147,12 @@
     ]
 },`;
 
-        // Tampilkan hasil
         document.getElementById("downloadLinks").innerHTML = downloadLinksHTML;
         document.getElementById("jsonOutput").value = jsonData;
         document.getElementById("outputData").style.display = "block";
         document.getElementById("generateBtn").innerText = "Generate Data & Watermark";
       }
 
-      // Fungsi untuk baca gambar, taruh di canvas, dan kasih watermark
       function processImage(file) {
         return new Promise((resolve) => {
           const reader = new FileReader();
@@ -171,16 +164,13 @@
               canvas.height = img.height;
               const ctx = canvas.getContext("2d");
 
-              // Gambar foto asli
               ctx.drawImage(img, 0, 0);
 
-              // Setup tulisan watermark
-              const fontSize = Math.max(canvas.width / 25, 20); // Skala font otomatis
+              const fontSize = Math.max(canvas.width / 25, 20);
               ctx.font = "bold " + fontSize + "px Arial";
-              ctx.fillStyle = "rgba(255, 255, 255, 0.6)"; // Putih transparan
+              ctx.fillStyle = "rgba(255, 255, 255, 0.6)";
               ctx.textAlign = "right";
 
-              // Kasih shadow biar kebaca di foto terang
               ctx.shadowColor = "rgba(0,0,0,0.8)";
               ctx.shadowBlur = 5;
               ctx.shadowOffsetX = 2;
@@ -188,7 +178,6 @@
 
               ctx.fillText("HANNS EV GARAGE", canvas.width - 30, canvas.height - 40);
 
-              // Convert canvas ke Data URL (kualitas JPEG 80%)
               resolve(canvas.toDataURL("image/jpeg", 0.8));
             };
             img.src = e.target.result;
