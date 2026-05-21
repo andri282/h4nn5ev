@@ -2,126 +2,488 @@
 <html lang="id">
   <head>
     <meta charset="UTF-8" />
-    <title>Admin V2 - Hanns EV Garage</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Tool — Hanns EV Garage</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <style>
+      :root {
+        --bg-main: #080d14;
+        --bg-card: #0d1520;
+        --bg-elevated: #121c2b;
+        --text-main: #e8f0fe;
+        --text-muted: #6b82a0;
+        --text-soft: #94aac4;
+        --accent: #00c2ff;
+        --accent-dim: rgba(0, 194, 255, 0.1);
+        --accent-hover: #00a8dd;
+        --accent-glow: rgba(0, 194, 255, 0.3);
+        --green: #00e5a0;
+        --green-dim: rgba(0, 229, 160, 0.1);
+        --border: rgba(255, 255, 255, 0.06);
+        --border-hover: rgba(0, 194, 255, 0.25);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
       body {
-        font-family: sans-serif;
-        padding: 20px;
-        background: #f4f4f4;
+        font-family: "DM Sans", sans-serif;
+        margin: 0;
+        background: var(--bg-main);
+        color: var(--text-main);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        -webkit-font-smoothing: antialiased;
       }
-      .container {
-        max-width: 600px;
-        background: white;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        margin: auto;
+
+      header {
+        border-bottom: 1px solid var(--border);
+        padding: 18px 24px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: rgba(8, 13, 20, 0.9);
+        backdrop-filter: blur(12px);
+        position: sticky;
+        top: 0;
+        z-index: 10;
       }
+
+      .header-badge {
+        background: var(--accent-dim);
+        color: var(--accent);
+        border: 1px solid var(--border-hover);
+        padding: 3px 10px;
+        border-radius: 4px;
+        font-size: 0.72em;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      header h1 {
+        margin: 0;
+        font-family: "Syne", sans-serif;
+        font-size: 1.1em;
+        font-weight: 700;
+        color: var(--text-main);
+      }
+
+      .main {
+        flex: 1;
+        max-width: 680px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 32px 20px 60px;
+      }
+
+      .page-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1.6em;
+        font-weight: 800;
+        margin: 0 0 6px;
+        letter-spacing: -0.02em;
+      }
+
+      .page-subtitle {
+        color: var(--text-muted);
+        font-size: 0.9em;
+        margin: 0 0 32px;
+      }
+
+      .card {
+        background: var(--bg-card);
+        border-radius: 16px;
+        border: 1px solid var(--border);
+        padding: 28px;
+        margin-bottom: 16px;
+      }
+
+      .card-title {
+        font-family: "Syne", sans-serif;
+        font-size: 0.8em;
+        font-weight: 700;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin: 0 0 20px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .card-title::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+
+      .form-group {
+        margin-bottom: 16px;
+      }
+
+      .form-group.full {
+        grid-column: 1 / -1;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 7px;
+        font-size: 0.82em;
+        font-weight: 500;
+        color: var(--text-soft);
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+      }
+
       input,
       select,
-      textarea,
-      button {
+      textarea {
         width: 100%;
-        padding: 10px;
-        margin: 10px 0;
-        box-sizing: border-box;
-        border: 1px solid #ccc;
-        border-radius: 4px;
+        padding: 11px 14px;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--text-main);
+        font-family: "DM Sans", sans-serif;
+        font-size: 0.95rem;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
       }
+
+      select {
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b82a0' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 14px center;
+        padding-right: 36px;
+        cursor: pointer;
+      }
+
+      input:focus,
+      select:focus,
+      textarea:focus {
+        outline: none;
+        border-color: var(--border-hover);
+        box-shadow: 0 0 0 3px rgba(0, 194, 255, 0.07);
+        background: rgba(0, 194, 255, 0.03);
+      }
+
+      input::placeholder,
+      textarea::placeholder {
+        color: var(--text-muted);
+        font-size: 0.9em;
+      }
+
       textarea {
         resize: vertical;
       }
-      .btn-primary {
-        background: #0ea5e9;
-        color: white;
-        border: none;
-        font-weight: bold;
+
+      /* File upload zone */
+      .upload-zone {
+        border: 1.5px dashed rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
         cursor: pointer;
-      }
-      .btn-primary:hover {
-        background: #0284c7;
+        transition: all 0.2s;
+        position: relative;
       }
 
-      /* Style buat tombol copy */
-      .btn-copy {
-        background: #10b981;
-        color: white;
-        border: none;
-        font-weight: bold;
-        cursor: pointer;
-        margin-top: 5px;
-        transition: 0.3s;
-      }
-      .btn-copy:hover {
-        background: #059669;
+      .upload-zone:hover,
+      .upload-zone.drag-over {
+        border-color: var(--border-hover);
+        background: var(--accent-dim);
       }
 
-      #outputData {
-        background: #eee;
-        padding: 15px;
+      .upload-zone input[type="file"] {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        border: none;
+        background: none;
+      }
+
+      .upload-icon {
+        width: 28px;
+        height: 28px;
+        opacity: 0.4;
+        margin: 0 auto 8px;
+      }
+
+      .upload-text {
+        font-size: 0.85em;
+        color: var(--text-muted);
+      }
+
+      .upload-text span {
+        color: var(--accent);
+        font-weight: 500;
+      }
+
+      #preview-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 12px;
+      }
+
+      .preview-thumb {
+        width: 64px;
+        height: 64px;
+        border-radius: 6px;
+        object-fit: cover;
+        border: 1px solid var(--border);
+      }
+
+      .btn-generate {
+        width: 100%;
+        padding: 14px 20px;
+        background: linear-gradient(135deg, var(--accent), #0080cc);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-family: "Syne", sans-serif;
+        font-weight: 700;
+        font-size: 1rem;
+        letter-spacing: 0.01em;
+        cursor: pointer;
+        transition: all 0.25s;
+        box-shadow: 0 4px 20px rgba(0, 194, 255, 0.2);
+        margin-top: 4px;
+      }
+
+      .btn-generate:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 28px rgba(0, 194, 255, 0.35);
+      }
+
+      .btn-generate:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      /* Output section */
+      #outputSection {
         display: none;
-        margin-top: 20px;
-        border-radius: 4px;
-        border: 1px solid #ddd;
+        animation: fadeUp 0.4s ease both;
       }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(12px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .section-label {
+        font-family: "Syne", sans-serif;
+        font-size: 1em;
+        font-weight: 700;
+        margin: 0 0 4px;
+      }
+
+      .section-hint {
+        font-size: 0.82em;
+        color: var(--text-muted);
+        margin: 0 0 14px;
+      }
+
       .download-list {
-        margin-bottom: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 4px;
       }
-      .download-list a {
-        display: block;
-        margin: 5px 0;
-        color: #0ea5e9;
+
+      .download-link {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        color: var(--accent);
         text-decoration: none;
-        font-weight: bold;
+        font-size: 0.9em;
+        font-weight: 500;
+        transition: all 0.2s;
       }
-      .download-list a:hover {
-        text-decoration: underline;
+
+      .download-link:hover {
+        background: var(--accent-dim);
+        border-color: var(--border-hover);
+      }
+
+      #jsonOutput {
+        font-family: "DM Mono", monospace;
+        font-size: 0.82em;
+        line-height: 1.6;
+        background: rgba(0, 0, 0, 0.3);
+        color: #a8c7f8;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 16px;
+        resize: vertical;
+        min-height: 200px;
+      }
+
+      .btn-copy {
+        width: 100%;
+        padding: 12px 20px;
+        background: var(--green-dim);
+        color: var(--green);
+        border: 1px solid rgba(0, 229, 160, 0.25);
+        border-radius: 8px;
+        font-family: "Syne", sans-serif;
+        font-weight: 700;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        margin-top: 10px;
+      }
+
+      .btn-copy:hover {
+        background: rgba(0, 229, 160, 0.15);
+        box-shadow: 0 0 20px rgba(0, 229, 160, 0.15);
+      }
+
+      .divider {
+        height: 1px;
+        background: var(--border);
+        margin: 24px 0;
+      }
+
+      .step-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: var(--accent-dim);
+        border: 1px solid var(--border-hover);
+        color: var(--accent);
+        font-size: 0.75em;
+        font-weight: 700;
+        flex-shrink: 0;
       }
     </style>
   </head>
   <body>
-    <div class="container">
-      <h2>Input Item & Watermark (Multi-Foto)</h2>
+    <header>
+      <div class="header-badge">Admin</div>
+      <h1>Hanns EV Garage</h1>
+    </header>
 
-      <label>Kategori:</label>
-      <select id="tipe">
-        <option value="motor">Motor Listrik</option>
-        <option value="sparepart">Sparepart / Baterai</option>
-      </select>
+    <div class="main">
+      <h2 class="page-title">Tambah Item Baru</h2>
+      <p class="page-subtitle">Generate kode data.js dan foto dengan watermark otomatis.</p>
 
-      <label>Nama Barang:</label>
-      <input type="text" id="nama" placeholder="Contoh: Gesits G1 2022 Second" />
+      <div class="card">
+        <div class="card-title">Detail Produk</div>
 
-      <label>Harga:</label>
-      <input type="text" id="harga" placeholder="Contoh: Rp 15.500.000" />
+        <div class="form-row">
+          <div class="form-group">
+            <label>Kategori</label>
+            <select id="tipe">
+              <option value="motor">Motor Listrik</option>
+              <option value="sparepart">Sparepart / Baterai</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Harga</label>
+            <input type="text" id="harga" placeholder="Contoh: 15500000" />
+          </div>
+          <div class="form-group full">
+            <label>Nama Barang</label>
+            <input type="text" id="nama" placeholder="Contoh: Gesits G1 2022 Second" />
+          </div>
+          <div class="form-group full">
+            <label>Deskripsi</label>
+            <textarea id="deskripsi" rows="5" placeholder="Tulis detail, kondisi, minus, kelengkapan..."></textarea>
+          </div>
+        </div>
+      </div>
 
-      <label>Deskripsi:</label>
-      <textarea id="deskripsi" rows="5" placeholder="Tulis deskripsi detail, minus, kondisi, dll..."></textarea>
+      <div class="card">
+        <div class="card-title">Foto Produk</div>
 
-      <label>Upload Foto (Bisa pilih lebih dari 1):</label>
-      <input type="file" id="upload" accept="image/*" multiple />
+        <div class="upload-zone" id="uploadZone">
+          <input type="file" id="upload" accept="image/*" multiple onchange="previewFiles(this.files)" />
+          <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+          </svg>
+          <div class="upload-text">Klik atau drag foto ke sini<br /><span>Bisa pilih lebih dari 1 foto</span></div>
+        </div>
+        <div id="preview-container"></div>
+      </div>
 
-      <button id="generateBtn" class="btn-primary" onclick="generateItem()">Generate Data & Watermark</button>
+      <button id="generateBtn" class="btn-generate" onclick="generateItem()">Generate Data &amp; Watermark</button>
 
-      <div id="outputData">
-        <h3>1. Download Foto (Sudah di-Watermark)</h3>
-        <p style="font-size: 0.9em; color: #666">Klik satu per satu link di bawah untuk download, simpan di folder <b>images</b>.</p>
-        <div id="downloadLinks" class="download-list"></div>
+      <!-- OUTPUT -->
+      <div id="outputSection">
+        <div class="divider"></div>
 
-        <h3>2. Copy Kode Ini</h3>
-        <p style="font-size: 0.9em; color: #666">Paste ke dalam array <code>database</code> di file data.js lu:</p>
-        <textarea id="jsonOutput" rows="12" style="font-family: monospace" readonly></textarea>
+        <div class="card">
+          <div class="card-title"><span class="step-number">1</span> Download Foto</div>
+          <p class="section-hint">Klik tiap link, simpan di folder <code>images/</code> di repo GitHub lu.</p>
+          <div id="downloadLinks" class="download-list"></div>
+        </div>
 
-        <button id="copyBtn" class="btn-copy" onclick="copyJSON()">📋 Copy Kode</button>
+        <div class="card">
+          <div class="card-title"><span class="step-number">2</span> Copy Kode ke data.js</div>
+          <p class="section-hint">Paste di dalam array <code>database = [...]</code> sebelum penutup kurung siku.</p>
+          <textarea id="jsonOutput" rows="12" readonly></textarea>
+          <button class="btn-copy" id="copyBtn" onclick="copyJSON()">📋 Copy Kode</button>
+        </div>
       </div>
     </div>
 
     <script>
+      function previewFiles(files) {
+        const container = document.getElementById("preview-container");
+        container.innerHTML = "";
+        Array.from(files).forEach((file) => {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            const img = document.createElement("img");
+            img.src = e.target.result;
+            img.className = "preview-thumb";
+            container.appendChild(img);
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+
       async function generateItem() {
         const tipe = document.getElementById("tipe").value;
-        const nama = document.getElementById("nama").value;
-        const harga = document.getElementById("harga").value;
-        const deskripsi = document.getElementById("deskripsi").value;
+        const nama = document.getElementById("nama").value.trim();
+        const harga = document.getElementById("harga").value.trim();
+        const deskripsi = document.getElementById("deskripsi").value.trim();
         const files = document.getElementById("upload").files;
 
         if (files.length === 0 || !nama || !harga) {
@@ -129,69 +491,70 @@
           return;
         }
 
-        document.getElementById("generateBtn").innerText = "Memproses...";
+        const btn = document.getElementById("generateBtn");
+        btn.disabled = true;
+        btn.innerText = "Memproses foto...";
 
         const baseFileName = nama
           .replace(/\s+/g, "-")
           .toLowerCase()
           .replace(/[^a-z0-9-]/g, "");
-
         let imagesArrayJS = [];
         let downloadLinksHTML = "";
 
         for (let i = 0; i < files.length; i++) {
-          const file = files[i];
-          const result = await processImage(file);
-
+          const result = await processImage(files[i]);
           const fileName = `${baseFileName}-${i + 1}.jpg`;
           imagesArrayJS.push(`"images/${fileName}"`);
-
-          downloadLinksHTML += `<a href="${result}" download="${fileName}">📥 Download ${fileName}</a>`;
+          downloadLinksHTML += `
+        <a href="${result}" download="${fileName}" class="download-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+          </svg>
+          ${fileName}
+        </a>`;
         }
 
         const uniqueId = Date.now();
         const safeDeskripsi = deskripsi.replace(/\n/g, "\\n").replace(/"/g, '\\"');
 
-        const jsonData = `{
+        const jsonData = `  {
     id: ${uniqueId},
     tipe: "${tipe}",
     nama: "${nama}",
     harga: "${harga}",
     deskripsi: "${safeDeskripsi}",
     images: [
-        ${imagesArrayJS.join(",\n        ")}
-    ]
-},`;
+      ${imagesArrayJS.join(",\n      ")}
+    ],
+  },`;
 
         document.getElementById("downloadLinks").innerHTML = downloadLinksHTML;
         document.getElementById("jsonOutput").value = jsonData;
-        document.getElementById("outputData").style.display = "block";
-        document.getElementById("generateBtn").innerText = "Generate Data & Watermark";
-
-        // Reset teks tombol copy tiap kali generate ulang
+        document.getElementById("outputSection").style.display = "block";
         document.getElementById("copyBtn").innerText = "📋 Copy Kode";
+
+        btn.disabled = false;
+        btn.innerText = "Generate Data & Watermark";
+
+        document.getElementById("outputSection").scrollIntoView({ behavior: "smooth", block: "start" });
       }
 
-      // FUNGSI BUAT COPY TEKS
       function copyJSON() {
         const copyText = document.getElementById("jsonOutput");
         copyText.select();
-        copyText.setSelectionRange(0, 99999); // Untuk support HP/Mobile
-
-        // Copy ke clipboard
+        copyText.setSelectionRange(0, 99999);
         navigator.clipboard
           .writeText(copyText.value)
           .then(() => {
             const btn = document.getElementById("copyBtn");
             btn.innerText = "✅ Berhasil di-copy!";
-
-            // Balikin teks tombol ke semula setelah 2 detik
             setTimeout(() => {
               btn.innerText = "📋 Copy Kode";
             }, 2000);
           })
-          .catch((err) => {
-            alert("Gagal copy teks otomatis, silakan copy manual.");
+          .catch(() => {
+            alert("Gagal copy otomatis, silakan copy manual.");
           });
       }
 
@@ -205,28 +568,40 @@
               canvas.width = img.width;
               canvas.height = img.height;
               const ctx = canvas.getContext("2d");
-
               ctx.drawImage(img, 0, 0);
 
               const fontSize = Math.max(canvas.width / 25, 20);
-              ctx.font = "bold " + fontSize + "px Arial";
+              ctx.font = `bold ${fontSize}px Arial`;
               ctx.fillStyle = "rgba(255, 255, 255, 0.6)";
               ctx.textAlign = "right";
-
               ctx.shadowColor = "rgba(0,0,0,0.8)";
               ctx.shadowBlur = 5;
               ctx.shadowOffsetX = 2;
               ctx.shadowOffsetY = 2;
-
               ctx.fillText("HANNS EV GARAGE", canvas.width - 30, canvas.height - 40);
 
-              resolve(canvas.toDataURL("image/jpeg", 0.8));
+              resolve(canvas.toDataURL("image/jpeg", 0.85));
             };
             img.src = e.target.result;
           };
           reader.readAsDataURL(file);
         });
       }
+
+      // drag-and-drop visual feedback
+      const zone = document.getElementById("uploadZone");
+      zone.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        zone.classList.add("drag-over");
+      });
+      zone.addEventListener("dragleave", () => zone.classList.remove("drag-over"));
+      zone.addEventListener("drop", (e) => {
+        e.preventDefault();
+        zone.classList.remove("drag-over");
+        const input = document.getElementById("upload");
+        input.files = e.dataTransfer.files;
+        previewFiles(e.dataTransfer.files);
+      });
     </script>
   </body>
 </html>
