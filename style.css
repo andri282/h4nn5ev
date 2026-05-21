@@ -302,7 +302,7 @@ footer .footer-brand {
 
 .card h3 {
   margin: 0 0 8px;
-  font-family: "Syne", sans-serif;
+  font-family: "DM Sans", sans-serif;
   font-size: 1.05em;
   font-weight: 700;
   color: var(--text-main);
@@ -596,7 +596,7 @@ footer .footer-brand {
 
 .modal-info h2 {
   margin: 0 0 10px;
-  font-family: "Syne", sans-serif;
+  font-family: "DM Sans", sans-serif;
   font-size: 1.6em;
   font-weight: 800;
   letter-spacing: -0.02em;
@@ -609,7 +609,7 @@ footer .footer-brand {
   font-weight: 700;
   margin: 0 0 24px;
   letter-spacing: -0.02em;
-  font-family: "Syne", sans-serif;
+  font-family: "DM Sans", sans-serif;
 }
 
 .modal-info h4 {
