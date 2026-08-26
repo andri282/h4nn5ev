@@ -21,6 +21,16 @@ const database = [
       "images/keeway.jpg"
     ],
   },
+    {
+    id: 1787734322277,
+    tipe: "motor",
+    nama: "Smooth Tempur ex Grab",
+    harga: "1900000",
+    deskripsi: "Smooth Tempur ex Grab\nKondisi bahan apa adanya\ntidak ada batre , charger dan kontroller\nbody tidak lengkap\nbldc normal\nsurat surat ada\nkhusus unit ini wajib pantau dan pilih sendiri ya",
+    images: [
+      "images/smooth.jpg"
+    ],
+  },
   {
     id: 1776150694252,
     tipe: "sparepart",
