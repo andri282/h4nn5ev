@@ -2,20 +2,24 @@
 
 const database = [
   {
-    id: 1776151587897,
+    id: 1787734074557,
     tipe: "motor",
-    nama: "Alessa Ex 3000 Second",
-    harga: "8500000",
-    deskripsi: "Alessa EX3000\nSurat lengkap\nPajak ON\nBatre bawaan upgrade BMS JIKONG\nAtas Nama PT surat pelepasan ada\nharga 8.5jt",
-    images: ["images/alessa-ex-3000-second-1.jpg"],
-  },
-  {
-    id: 1776151505410,
-    tipe: "motor",
-    nama: "Uwinfly T3S PRO Second",
+    nama: "Doohan iTango",
     harga: "6000000",
-    deskripsi: "Uwinfly T3S Pro\nOff the road / belum bersurat\nKelengkapan bisa dengan batre 72v 20ah atau tanpa batre\nbisa dengan charger atau tanpa charger\nHarga 6jt termasuk batre dan charger",
-    images: ["images/t3pro.jpg"],
+    deskripsi: "Doohan iTango unit only\ntanpa batre\ntanpa charger\nban depan kempes\nSurat hanya STNK dan Surat pelepasan asset",
+    images: [
+      "images/doohan.jpg"
+    ],
+  },
+    {
+    id: 1787734190359,
+    tipe: "motor",
+    nama: "Keeway KL1500GS",
+    harga: "6000000",
+    deskripsi: "Keeway KL1500GS\nBrand New\nHarga di atas  adalah tanpa batre\ncharger ada\noff the road\nfaktur atas nama pembeli\ntersedia warna hitam, putih,hijau",
+    images: [
+      "images/keeway.jpg"
+    ],
   },
   {
     id: 1776150694252,
