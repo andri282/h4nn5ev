@@ -34,9 +34,9 @@ const database = [
   {
     id: 1776150694252,
     tipe: "sparepart",
-    nama: "BMS JIKONG 150/300 2A",
+    nama: "BMS JIKONG 60/100 0.6A",
     harga: "1350000",
     deskripsi: "BMS JIKONG",
-    images: ["images/bms-jikong-150300-2a-1.jpg"],
+    images: ["images/jk60.jpg"],
   },
 ];
