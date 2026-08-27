@@ -41,4 +41,34 @@ const database = [
       "images/bms-jikong-60100-06a-1.jpg"
     ],
   },
+    {
+    id: 1787800611441,
+    tipe: "sparepart",
+    nama: "Box AKI SLA 48v Bekas",
+    harga: "100000",
+    deskripsi: "Box AKI SLA 48v \nbisa isi 4 AKI\ncocok untuk box DIY Power station",
+    images: [
+      "images/box-aki-sla-48v-bekas-1.jpg"
+    ],
+  },
+    {
+    id: 1787800688395,
+    tipe: "sparepart",
+    nama: "Lakban Fiber 3mm 50m",
+    harga: "60000",
+    deskripsi: "Lakban Fiber\nlebar 3mm\npanjang 50m",
+    images: [
+      "images/lakban-fiber-3mm-50m-1.jpg"
+    ],
+  },
+    {
+    id: 1787800753912,
+    tipe: "sparepart",
+    nama: "Timah Banua 200 gram",
+    harga: "130000",
+    deskripsi: "Timah Banua 200 gram\nmening dan josjis",
+    images: [
+      "images/timah-banua-200-gram-1.jpg"
+    ],
+  },
 ];
