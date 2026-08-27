@@ -32,11 +32,13 @@ const database = [
     ],
   },
   {
-    id: 1776150694252,
+    id: 1787799763690,
     tipe: "sparepart",
-    nama: "BMS JIKONG 60/100 0.6A",
-    harga: "1350000",
-    deskripsi: "BMS JIKONG",
-    images: ["images/jk60.jpg"],
+    nama: "BMS Jikong 60/100 0.6A",
+    harga: "650000",
+    deskripsi: "BMS JK 60/100 0.6A Balancer\nKondisi Baru\nInclude Kabel Gurita 24S\n\nBMS Tidak ada garansi",
+    images: [
+      "images/bms-jikong-60100-06a-1.jpg"
+    ],
   },
 ];
