@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cetak Nota Kasir Thermal — Kelontong Bapak EV</title>
+  <meta name="description" content="Generator nota & invoice ukuran printer thermal (58mm / 80mm) untuk transaksi motor listrik, spare part & jasa di Kelontong Bapak EV.">
+  <meta property="og:title" content="Cetak Nota Thermal — Kelontong Bapak EV">
+  <meta property="og:description" content="Cetak struk belanja thermal kasir mirip Indomaret, support cetak printer bluetooth 58mm/80mm & kirim nota ke WhatsApp.">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧾</text></svg>">
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="top-notice">
+    <span>🧾 Modul Kasir & Cetak Nota Thermal: Format Khusus Printer Struk (58mm / 80mm) & Bukti Transaksi Resmi.</span>
+    <a href="https://wa.me/6282136538487" target="_blank" rel="noopener" class="wa-contact-link">Bantuan Admin via WA &rarr;</a>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <!-- Brand Logo -->
+      <a href="index.html" class="brand-link" id="brandLogoLink">
+        <div class="brand-icon-box">⚡</div>
+        <div class="brand-text">
+          <span class="brand-name store-name">Kelontong Bapak EV</span>
+          <span class="brand-tag store-handle">@nugrohoandri.ev</span>
+        </div>
+      </a>
+
+      <!-- Navigation Tabs -->
+      <nav aria-label="Main Navigation">
+        <ul class="nav-tabs">
+          <li>
+            <a href="index.html" class="nav-link" id="nav-motor">
+              <span>🛵 Motor Bekas</span>
+            </a>
+          </li>
+          <li>
+            <a href="sparepart.html" class="nav-link" id="nav-sparepart">
+              <span>⚙️ Spare Part</span>
+            </a>
+          </li>
+          <li>
+            <a href="affiliate.html" class="nav-link" id="nav-affiliate">
+              <span>🔗 Link Affiliate</span>
+            </a>
+          </li>
+          <li>
+            <a href="invoice.html" class="nav-link active" id="nav-invoice">
+              <span>🧾 Cetak Nota</span>
+              <span class="nav-count">Thermal</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Action Button Right -->
+      <div class="header-actions">
+        <a href="https://wa.me/6282136538487" target="_blank" rel="noopener" class="btn-whatsapp-header wa-contact-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
+          <span>Chat Mas Andri</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-glow-1"></div>
+    <div class="hero-glow-2"></div>
+    <div class="container hero-grid">
+      <div class="hero-badge-pill">
+        <span class="pulse-dot"></span>
+        <span>KASIR PENJUALAN SPARE PART & KOMPONEN EV</span>
+      </div>
+      <h1 class="hero-title">
+        Nota Kasir EV Parts Shop, <br>
+        <span class="text-gradient">Cetak Thermal & Simpan PDF.</span>
+      </h1>
+      <p class="hero-tagline">
+        Rancang nota penjualan spare part motor listrik, baterai pack LiFePO4, BMS, controller, dinamo QS, dan jasa bengkel. Siap cetak ke printer thermal (58mm / 80mm), simpan file PDF, atau kirim langsung ke WhatsApp.
+      </p>
+
+      <div class="hero-highlights">
+        <div class="highlight-item">
+          <span class="highlight-icon">🖨️</span>
+          <span>Format Thermal 58mm / 80mm</span>
+        </div>
+        <div class="highlight-item">
+          <span class="highlight-icon">📄</span>
+          <span>1-Klik Download File PDF</span>
+        </div>
+        <div class="highlight-item">
+          <span class="highlight-icon">📲</span>
+          <span>Kirim Struk ke WhatsApp</span>
+        </div>
+        <div class="highlight-item">
+          <span class="highlight-icon">⚠️</span>
+          <span>Klausul Barang Tidak Dapat Dikembalikan</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Invoice App Layout -->
+  <main class="container">
+    <div class="invoice-layout">
+      
+      <!-- LEFT: Form Builder Panel -->
+      <div class="invoice-form-card">
+        
+        <!-- Section 1: Transaksi Info -->
+        <div class="invoice-section-title">
+          <span>📋</span> Informasi Transaksi
+        </div>
+        <div class="form-grid-3">
+          <div class="form-group">
+            <label class="form-label" for="invNumber">No. Nota / Invoice</label>
+            <div style="display:flex; gap:6px;">
+              <input type="text" id="invNumber" class="form-control font-mono" style="font-weight:700;" value="KEV-261102-001">
+              <button type="button" id="btnRefreshInvNo" class="btn-detail" style="padding:0 10px;" title="Buat nomor baru">🔄</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="invDate">Tanggal & Waktu</label>
+            <input type="text" id="invDate" class="form-control" value="02/11/2026 10:00">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="invKasir">Kasir / Admin</label>
+            <input type="text" id="invKasir" class="form-control" value="Mas Andri">
+          </div>
+        </div>
+
+        <!-- Section 2: Data Pembeli -->
+        <div class="invoice-section-title">
+          <span>👤</span> Data Pembeli & Kendaraan
+        </div>
+        <div class="form-grid-3">
+          <div class="form-group">
+            <label class="form-label" for="custName">Nama Pembeli</label>
+            <input type="text" id="custName" class="form-control" placeholder="Contoh: Bpk. Budi / Mas Rian">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="custPhone">No. WhatsApp / HP</label>
+            <input type="text" id="custPhone" class="form-control" placeholder="Contoh: 08123456789">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="custVehicle">Tipe Motor / Catatan Part</label>
+            <input type="text" id="custVehicle" class="form-control" placeholder="Contoh: Fox-R / Beat Konversi / T3 / Custom">
+          </div>
+        </div>
+
+        <!-- Section 3: Rincian Barang -->
+        <div class="invoice-section-title" style="justify-content: space-between;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span>🛒</span> Item Belanja
+          </div>
+          <button type="button" class="btn-add-item" id="btnAddItem">
+            <span>+</span> Tambah Baris
+          </button>
+        </div>
+
+        <!-- Quick Item Presets -->
+        <div class="quick-pick-wrap">
+          <span class="quick-pick-label">⚡ Cepat:</span>
+          <div id="quickPresetsWrap" style="display:contents;">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+
+        <!-- Items Table -->
+        <div class="items-table-wrap">
+          <table class="items-table">
+            <thead>
+              <tr>
+                <th>Nama Barang / Jasa</th>
+                <th>Qty</th>
+                <th>Harga Satuan (Rp)</th>
+                <th style="text-align: right;">Subtotal</th>
+                <th style="text-align: center;">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="itemsTableBody">
+              <!-- Injected via JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Section 4: Pembayaran & Status Tagihan -->
+        <div class="invoice-section-title">
+          <span>💳</span> Status Pembayaran & Kalkulasi
+        </div>
+
+        <!-- Status Pembayaran Toggle -->
+        <div style="margin-bottom: 16px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <label class="form-label" style="margin:0;">Status Pembayaran Saat Ini</label>
+            <span style="font-size:11.5px; color:var(--text-muted);">Default awal cetak: <b>Belum Lunas</b></span>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <button type="button" class="pay-status-btn active" data-paystatus="BELUM LUNAS" style="flex:1;">
+              ⏳ BELUM LUNAS
+            </button>
+            <button type="button" class="pay-status-btn" data-paystatus="DP" style="flex:1;">
+              🟡 DP / UANG MUKA
+            </button>
+            <button type="button" class="pay-status-btn" data-paystatus="LUNAS" style="flex:1;">
+              ✅ LUNAS
+            </button>
+          </div>
+          <input type="hidden" id="payStatusInput" value="BELUM LUNAS">
+        </div>
+        
+        <div class="form-grid-3">
+          <div class="form-group">
+            <label class="form-label" for="payMethod">Metode / Jalur Bayar</label>
+            <select id="payMethod" class="form-control">
+              <option value="Transfer BCA">Transfer BCA</option>
+              <option value="Transfer Mandiri">Transfer Mandiri</option>
+              <option value="Transfer BRI">Transfer BRI</option>
+              <option value="QRIS">QRIS</option>
+              <option value="Tunai / Cash">Tunai / Cash</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="discountInput">Diskon / Potongan (Rp)</label>
+            <input type="number" id="discountInput" class="form-control" min="0" step="1000" value="0">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="otherFeeInput">Ongkir / Jasa Pasang (Rp)</label>
+            <input type="number" id="otherFeeInput" class="form-control" min="0" step="1000" value="0">
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group" id="paidInputGroup">
+            <label class="form-label" for="paidInput" id="paidInputLabel">Jumlah Pembayaran Masuk (Rp)</label>
+            <input type="number" id="paidInput" class="form-control font-mono" min="0" step="1000" placeholder="0" value="0" style="font-size:16px; font-weight:700;">
+            <small style="font-size:11.5px; color:var(--text-muted); margin-top:4px;" id="paidInputHint">
+              Nilai 0 = Belum ada pembayaran (nota tagihan awal ke WA pelanggan).
+            </small>
+          </div>
+          
+          <!-- Summary Display Box -->
+          <div class="calculation-box">
+            <div class="calc-row">
+              <span>Subtotal Item:</span>
+              <strong id="calcSubtotal" class="font-mono">Rp 0</strong>
+            </div>
+            <div class="calc-row total-row">
+              <span>TOTAL TAGIHAN:</span>
+              <strong id="calcGrandTotal" class="font-mono">Rp 0</strong>
+            </div>
+            <div class="calc-row" id="calcRemainingRow">
+              <span id="calcRemainingLabel" style="font-weight:700; color:var(--rose);">Sisa Tagihan:</span>
+              <strong id="calcRemaining" class="font-mono" style="font-weight:700; color:var(--rose);">Rp 0</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="invoice-actions-bar">
+          <button type="button" id="btnPrintReceipt" class="btn-print-thermal">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+            Cetak Thermal
+          </button>
+          <button type="button" id="btnSavePdf" class="btn-pdf-receipt" title="Simpan sebagai file PDF">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+            Simpan PDF
+          </button>
+          <button type="button" id="btnCopyWa" class="btn-wa-receipt">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
+            Kirim ke WhatsApp
+          </button>
+          <button type="button" id="btnSaveInvoice" class="btn-reset-invoice" title="Simpan ke riwayat lokal">
+            💾 Simpan
+          </button>
+          <button type="button" id="btnReset" class="btn-reset-invoice" title="Mulai transaksi baru">
+            🔄 Transaksi Baru
+          </button>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: Live Thermal Receipt Preview (Indomaret / POS Style) -->
+      <div class="thermal-preview-wrap">
+        
+        <!-- Paper Size Toggle -->
+        <div class="paper-size-selector">
+          <span style="font-size: 11.5px; color: var(--text-muted); font-weight:600;">Ukuran Kertas:</span>
+          <button type="button" class="paper-size-btn active" data-size="58">58 mm (Mini POS)</button>
+          <button type="button" class="paper-size-btn" data-size="80">80 mm (Standard POS)</button>
+        </div>
+
+        <!-- Thermal Paper Roll DOM Element (Printed via window.print) -->
+        <div id="thermalReceipt" class="thermal-receipt size-58">
+          
+          <!-- Store Header -->
+          <div class="receipt-header">
+            <div class="receipt-store-title" id="receiptStoreTitle">Kelontong Bapak</div>
+            <div class="receipt-store-sub" id="receiptStoreSub" style="font-weight:700; text-transform:uppercase; letter-spacing:0.06em; margin:2px 0 3px;">EV Parts Shop</div>
+            <div class="receipt-store-sub" id="receiptStoreAddr">Bolon, Colomadu, Karanganyar</div>
+            <div class="receipt-store-sub" id="receiptStoreWa">WA: 0821-3653-8487</div>
+          </div>
+
+          <hr class="receipt-divider-double">
+
+          <!-- Transaction Metadata -->
+          <div class="receipt-meta">
+            <div class="receipt-meta-row">
+              <span>No. Nota :</span>
+              <span id="receiptNo" style="font-weight:700;">KEV-261102-001</span>
+            </div>
+            <div class="receipt-meta-row">
+              <span>Tanggal  :</span>
+              <span id="receiptDate">02/11/2026 10:00</span>
+            </div>
+            <div class="receipt-meta-row">
+              <span>Kasir    :</span>
+              <span id="receiptKasir">Mas Andri</span>
+            </div>
+            <div class="receipt-meta-row">
+              <span>Pembeli  :</span>
+              <span id="receiptCust" style="font-weight:700;">Pelanggan Umum</span>
+            </div>
+            <div class="receipt-meta-row">
+              <span>No. HP   :</span>
+              <span id="receiptPhone">-</span>
+            </div>
+            <div class="receipt-meta-row" id="receiptVehicleRow" style="display:none;">
+              <span>Motor/Ket:</span>
+              <span id="receiptVehicle">-</span>
+            </div>
+          </div>
+
+          <hr class="receipt-divider">
+
+          <!-- Header Items -->
+          <div style="display:flex; justify-content:space-between; font-weight:700; font-size:11px; margin-bottom:4px;">
+            <span>ITEM BARANG</span>
+            <span>TOTAL</span>
+          </div>
+
+          <hr class="receipt-divider">
+
+          <!-- Items List Container -->
+          <div class="receipt-items-list" id="receiptItemsList">
+            <!-- Injected via JS -->
+          </div>
+
+          <hr class="receipt-divider">
+
+          <!-- Totals Calculation -->
+          <div class="receipt-totals">
+            <div class="receipt-total-row">
+              <span>Subtotal</span>
+              <span id="receiptSubtotal">0</span>
+            </div>
+            <div class="receipt-total-row" id="receiptDiscountRow" style="display:none;">
+              <span>Diskon</span>
+              <span id="receiptDiscount">0</span>
+            </div>
+            <div class="receipt-total-row" id="receiptFeeRow" style="display:none;">
+              <span>Ongkir / Jasa</span>
+              <span id="receiptFee">0</span>
+            </div>
+            
+            <div class="receipt-total-row grand-total">
+              <span id="receiptGrandTotalLabel">TOTAL TAGIHAN</span>
+              <span id="receiptGrandTotal">Rp 0</span>
+            </div>
+            
+            <div class="receipt-total-row" id="receiptPaymentRow" style="margin-top:6px;">
+              <span id="receiptPayMethodLabel">Bayar</span>
+              <span id="receiptPaid">0</span>
+            </div>
+            <div class="receipt-total-row" id="receiptRemainingRow">
+              <span id="receiptRemainingLabel" style="font-weight:700;">SISA TAGIHAN</span>
+              <span id="receiptRemaining" style="font-weight:700;">0</span>
+            </div>
+          </div>
+
+          <!-- Mandatory Disclaimer Box -->
+          <div class="receipt-disclaimer-box">
+            <div class="receipt-disclaimer-text">
+              BARANG YANG DIBELI<br>TIDAK DAPAT DIKEMBALIKAN
+            </div>
+          </div>
+
+          <!-- Receipt Footer Message -->
+          <div class="receipt-footer">
+            <div id="receiptFooterNote">Simpan bukti nota tagihan & pembayaran ini.</div>
+            <div>Kelontong Bapak — EV Parts Shop</div>
+            <!-- Dynamic Status Stamp -->
+            <div id="receiptStatusStamp" style="margin-top:8px; padding:4px 6px; border:1px dashed #000; letter-spacing:2px; font-weight:900; font-size:12.5px; text-transform:uppercase;">
+              *** BELUM LUNAS ***
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Riwayat Transaksi Tersimpan -->
+    <section class="invoice-history-section">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <h3 style="font-size:18px; color:var(--text-white); display:flex; align-items:center; gap:8px;">
+          <span>📂</span> Riwayat Transaksi Tersimpan di Perangkat Ini
+        </h3>
+        <span style="font-size:12px; color:var(--text-muted);">Maksimal 50 transaksi terakhir</span>
+      </div>
+      
+      <div class="items-table-wrap" style="margin-bottom:0;">
+        <table class="items-table">
+          <thead>
+            <tr>
+              <th>No. Nota</th>
+              <th>Tanggal</th>
+              <th>Nama Pembeli</th>
+              <th>Status</th>
+              <th>Jumlah Item</th>
+              <th>Total Transaksi</th>
+              <th style="text-align: right;">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="invoiceHistoryBody">
+            <!-- Injected via JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Toast Element -->
+  <div id="toast" class="toast"></div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+            <div class="brand-icon-box" style="width:36px; height:36px; font-size:18px;">⚡</div>
+            <h3 class="store-name" style="font-size: 20px;">Kelontong Bapak EV</h3>
+          </div>
+          <p class="store-tagline">Bursa motor listrik bekas teruji, spare part upgrade, & kumpulan link racun affiliate terpercaya.</p>
+          <p style="font-size: 13px; color: var(--cyan); margin-bottom: 16px;">
+            📍 <span class="store-location">Solo, Jawa Tengah</span>
+          </p>
+          <div class="footer-social-links">
+            <a href="#" id="footerIg" target="_blank" rel="noopener" class="social-btn" title="Instagram">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a href="#" id="footerTiktok" target="_blank" rel="noopener" class="social-btn" title="TikTok">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.24 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+            </a>
+            <a href="#" id="footerYt" target="_blank" rel="noopener" class="social-btn" title="YouTube">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="footer-heading">Navigasi Katalog</h4>
+          <ul class="footer-menu">
+            <li><a href="index.html">🛵 Motor Listrik Bekas</a></li>
+            <li><a href="sparepart.html">⚙️ Spare Part & Komponen EV</a></li>
+            <li><a href="affiliate.html">🔗 Kumpulan Link Affiliate</a></li>
+            <li><a href="invoice.html">🧾 Kasir & Cetak Nota Thermal</a></li>
+            <li><a href="SETUP.md" target="_blank">📋 Panduan Admin Bot Telegram</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-heading">Layanan Garasi</h4>
+          <ul class="footer-menu">
+            <li><a href="https://wa.me/6282136538487" target="_blank" rel="noopener" class="wa-contact-link">💬 Cek Fisik & Test Ride</a></li>
+            <li><a href="https://wa.me/6282136538487" target="_blank" rel="noopener" class="wa-contact-link">🔋 Upgrade & Custom Baterai</a></li>
+            <li><a href="https://wa.me/6282136538487" target="_blank" rel="noopener" class="wa-contact-link">📦 Titip Jual Motor EV</a></li>
+            <li><a href="https://wa.me/6282136538487" target="_blank" rel="noopener" class="wa-contact-link">🚚 Bantu Ekspedisi Luar Kota</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          &copy; 2026 <strong class="store-name">Kelontong Bapak EV</strong> • Curated with ⚡ by <span class="store-handle">@nugrohoandri.ev</span>
+        </div>
+        <div>
+          Thermal Print Ready (58mm / 80mm) & 100% Static on GitHub Pages
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/jspdf.umd.min.js"></script>
+  <script src="js/html2pdf.bundle.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/invoice.js"></script>
+</body>
+</html>
